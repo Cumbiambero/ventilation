@@ -6,7 +6,7 @@
 
 DHT dht(PIN_DHT_SENSOR_READ, DHT11);
 const float HUMIDITY_THRESHOLD = 55.0;
-const float TEMPERATURE_THRESHOLD = 35.0;
+const float TEMPERATURE_THRESHOLD = 30.0;
 
 float humidity = 0.0;
 float temperature = 0.0;
