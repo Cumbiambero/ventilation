@@ -11,7 +11,6 @@ const float TEMPERATURE_THRESHOLD = 35.0;
 float humidity = 0.0;
 float temperature = 0.0;
 
-
 void setup() {
   pinMode(PIN_DHT_SENSOR_POWER, OUTPUT);
   pinMode(PIN_RELAY_FOR_FAN, OUTPUT);
@@ -30,7 +29,8 @@ void loop() {
   sleep();
 }
 
-void readSensor() {  
+void readSensor() {
+  settle(); 
   digitalWrite(PIN_DHT_SENSOR_POWER, HIGH);
   settle();
   dht.begin();
