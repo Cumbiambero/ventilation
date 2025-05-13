@@ -5,8 +5,12 @@
 #define PIN_RELAY_FOR_FAN 13   // pin for the relay control that powers the 12v fan
 
 DHT dht(PIN_DHT_SENSOR_READ, DHT11);
+const float HUMIDITY_THRESHOLD = 55.0;
+const float TEMPERATURE_THRESHOLD = 35.0;
+
 float humidity = 0.0;
 float temperature = 0.0;
+
 
 void setup() {
   pinMode(PIN_DHT_SENSOR_POWER, OUTPUT);
@@ -23,21 +27,25 @@ void loop() {
   } else {
     turnFanOff();
   }
-  operateOrWaitFor10Minutes();
+  sleep();
 }
 
-void readSensor() {
+void readSensor() {  
   digitalWrite(PIN_DHT_SENSOR_POWER, HIGH);
-  delay(1000);
+  settle();
   dht.begin();
-  delay(1000);
+  settle();
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
   digitalWrite(PIN_DHT_SENSOR_POWER, LOW);
+  settle();
 }
 
 bool ventilationIsNecessary() {
-  return humidity > 55.0 || temperature > 35.0;
+  if (isnan(humidity) || isnan(temperature)) {
+    return false;
+  }
+  return humidity > HUMIDITY_THRESHOLD || temperature > TEMPERATURE_THRESHOLD;
 }
 
 void turnFanOn() {
@@ -50,6 +58,10 @@ void turnFanOff() {
   digitalWrite(PIN_RELAY_FOR_FAN, LOW);
 }
 
-void operateOrWaitFor10Minutes() {
+void settle() {
+  delay(2000);
+}
+
+void sleep() {
   delay(600000);
 }
