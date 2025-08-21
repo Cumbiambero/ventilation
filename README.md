@@ -1,6 +1,8 @@
 # ventilation
 Simple ventilation control based on DHT sensor and Arduino Nano
 
+![Hardware](hardware.jpg?raw=true "Hardware")
+
 Components used:
 - 12V Power supply
 - 12V Brushless fan
